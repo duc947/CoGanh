@@ -40,7 +40,7 @@ public class Environment {
 	public int ScorePerKill {get{return m_ScorePerKill;}}
 	private int m_PlayerScore = 0;
 	public int PlayerScore{get{return m_PlayerScore;}}
-	int simulationCount = 100;
+	
 	public Environment() {
 		
 		moveDiagonalRightDown = new int[][]{new int[]{0, 0}, new int[]{1, 1}, new int[]{2, 2}, new int[]{3, 3}, new int[]{0, 2}, new int[]{1, 3}, new int[]{2, 0}, new int[]{3, 1}};
@@ -666,8 +666,9 @@ public class Environment {
 
 		// /////MCTS
 		int[] lastMove = null;
+		int simulationCount = 100;
 		TreeNode tn = new TreeNode(AINumb, upPlayerPos, downPlayerPos);
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < simulationCount; i++) {
 			Debug.LogError("so lan!" + i);
 			tn.selectAction();
 			
