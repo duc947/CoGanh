@@ -633,36 +633,40 @@ public class Environment {
 	// moves;
 	// int score = -18;
 	protected int[] computerMoves(int AINumb) {
-		// List<List<string>>  closeStack = new List<List<string>>();
-		// var score = -18;
-		// int[] move = null;
-		// bool checkExist = false;
-		// List<List<int>>  moves = simpleMoves(AINumb, upPlayerPos, downPlayerPos);
-		// int[][] movesArray  = moves.Select(item => item.ToArray()).ToArray();
-		// movesArray = Shuffle(movesArray);
-		// int maxFloor = 1;
-		// int floor = 0;
-		// string computerEncode = string.Empty;
-		// string playerEncode = string.Empty;
-		// foreach (var item in movesArray)
-		// {
-		// 	checkExist = false;
-		// 	int[][] upPlayerPosTemp = (int[][]) upPlayerPos.Select(i => i.ToArray()).ToArray();
-		// 	int[][] downPlayerPosTemp = (int[][]) downPlayerPos.Select(i => i.ToArray()).ToArray();
-		// 	changeBoard(false, item, AINumb, ref upPlayerPosTemp, ref downPlayerPosTemp);
-		// 	computerEncode = Flatten(upPlayerPosTemp);
-		// 	playerEncode = Flatten(downPlayerPosTemp);
-		// 	closeStack.Add(new List<string> () {computerEncode, playerEncode});
-		// 	var tempScore = - minimax(-1*AINumb, ref upPlayerPosTemp, ref downPlayerPosTemp, ref closeStack, floor, maxFloor);
-		// 	if(tempScore > score) {
-		// 		score = tempScore;
-		// 		move = item;
-		// 	}
-		// }
-		// if(move != null) {
-		// 	return move;
-		// }
-		// return null;
+		List<List<string>>  closeStack = new List<List<string>>();
+		var score = -18;
+		int[] move = null;
+		bool checkExist = false;
+		List<List<int>>  moves = simpleMoves(AINumb, upPlayerPos, downPlayerPos);
+		int[][] movesArray  = moves.Select(item => item.ToArray()).ToArray();
+		movesArray = Shuffle(movesArray);
+		int maxFloor = 3;
+		int floor = 0;
+		string computerEncode = string.Empty;
+		string playerEncode = string.Empty;
+		foreach (var item in movesArray)
+		{
+			checkExist = false;
+			int[][] upPlayerPosTemp = (int[][]) upPlayerPos.Select(i => i.ToArray()).ToArray();
+			int[][] downPlayerPosTemp = (int[][]) downPlayerPos.Select(i => i.ToArray()).ToArray();
+			changeBoard(false, item, AINumb, ref upPlayerPosTemp, ref downPlayerPosTemp);
+			computerEncode = Flatten(upPlayerPosTemp);
+			playerEncode = Flatten(downPlayerPosTemp);
+			closeStack.Add(new List<string> () {computerEncode, playerEncode});
+			var tempScore = - minimax(-1*AINumb, ref upPlayerPosTemp, ref downPlayerPosTemp, ref closeStack, floor, maxFloor);
+			if(tempScore > score) {
+				score = tempScore;
+				move = item;
+			}
+		}
+		if(move != null) {
+			return move;
+		}
+		return null;
+	}
+
+	protected int[] computerMovesMCST(int AINumb) {
+		
 
 		// /////MCTS
 		int[] lastMove = null;
@@ -768,6 +772,7 @@ public class Environment {
 				if(m_Winner != PlayerTurn.NULL || m_GameRestart) break;
 				if(Main.Instance.IsDownAI) {
 					Debug.Log("-------------- Computer 2 Turn --------------");
+					//m_Move = computerMovesMCST(-1);
 					m_Move = computerMoves(-1);
 				} 
 				else {
